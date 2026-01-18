@@ -29,16 +29,19 @@ public static class McpServerExtensions
         services.AddSingleton<McpRequestProcessor>();
         services.AddSingleton<ConcurrentDictionary<string, SseSession>>();
 
-        services.AddCors(corsOptions =>
+        if (options.UseDefaultCors)
         {
-            corsOptions.AddPolicy("McpCors", policy =>
+            services.AddCors(corsOptions =>
             {
-                policy.AllowAnyOrigin()
-                      .AllowAnyMethod()
-                      .AllowAnyHeader()
-                      .WithExposedHeaders("*");
+                corsOptions.AddPolicy("McpCors", policy =>
+                {
+                    policy.AllowAnyOrigin()
+                          .AllowAnyMethod()
+                          .AllowAnyHeader()
+                          .WithExposedHeaders("*");
+                });
             });
-        });
+        }
 
         return services;
     }
@@ -119,7 +122,10 @@ public static class McpServerExtensions
             }
         }
 
-        app.UseCors("McpCors");
+        if (options.UseDefaultCors)
+        {
+            app.UseCors("McpCors");
+        }
 
         if (options.EnableHttpLogging)
         {

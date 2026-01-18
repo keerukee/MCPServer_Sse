@@ -39,4 +39,11 @@ public class McpServerOptions
     /// The route path for the message endpoint.
     /// </summary>
     public string MessageEndpoint { get; set; } = "/message";
+
+    /// <summary>
+    /// Whether to automatically configure a permissive CORS policy (AllowAnyOrigin).
+    /// Defaults to false. Set to true if you need the server to be accessible from browser-based clients
+    /// and haven't configured CORS globally.
+    /// </summary>
+    public bool UseDefaultCors { get; set; } = false;
 }
