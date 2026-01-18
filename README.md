@@ -289,8 +289,24 @@ builder.Services.AddMcpSseServer(options =>
     // Endpoints (customize if needed)
     options.SseEndpoint = "/sse";           // SSE connection endpoint
     options.MessageEndpoint = "/message";   // Message endpoint
+    
+    // CORS configuration (opt-in)
+    options.UseDefaultCors = true;          // Enable permissive CORS for browser clients
 });
 ```
+
+### CORS Configuration
+
+By default, CORS is **not enabled**. If you need your MCP server to be accessible from browser-based clients, you can enable the built-in permissive CORS policy:
+
+```csharp
+builder.Services.AddMcpSseServer(options =>
+{
+    options.UseDefaultCors = true;  // Enables AllowAnyOrigin, AllowAnyMethod, AllowAnyHeader
+});
+```
+
+> **Note:** For production environments, consider configuring your own CORS policy instead of using the permissive default.
 
 ---
 
@@ -438,6 +454,13 @@ GitHub Repository: **[https://github.com/keerukee/MCPServer_Sse.git](https://git
 ## ?? License
 
 MIT License - feel free to use in your projects!
+
+---
+
+## ?? Recent Changes
+
+### Latest Update
+- **CORS Configuration (Opt-in)**: CORS is now optional and disabled by default. Use `UseDefaultCors = true` to enable a permissive CORS policy for browser-based clients. This gives you full control over CORS configuration in your application.
 
 ---
 
